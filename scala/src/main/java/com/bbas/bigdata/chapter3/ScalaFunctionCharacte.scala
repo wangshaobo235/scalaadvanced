@@ -59,6 +59,7 @@ object ScalaFunctionCharacte {
     def test4(): Unit = {
       println("test")
     }
+
     val testCopy4: () => Unit = test4 _
     testCopy4
     testCopy4()
@@ -66,12 +67,13 @@ object ScalaFunctionCharacte {
     //TODO 将函数对象作为参数使用
 
     println("将函数对象作为参数使用")
-      def fun():Unit={
-        println("test")
-      }
 
-    def funtest(f:()=>Unit):Unit={
-        f()
+    def fun(): Unit = {
+      println("test")
+    }
+
+    def funtest(f: () => Unit): Unit = {
+      f()
     }
 
     funtest(fun _)
@@ -81,17 +83,27 @@ object ScalaFunctionCharacte {
     //
     //
 
-    def funcSum(a:Int,b:Int):Int={
-        a+b
+    def funcSum(a: Int, b: Int): Int = {
+      a + b
     }
 
-    def funcTest((a:Int,b:Int)=>Int):Unit={
-      println(funcSum(a, b))
+    def funcTest(a: Int, b: Int, op: (Int, Int) => Int): Unit = {
+      println(op(a, b))
     }
 
     // 将函数传递给另一个函数
-    funcTest(funcSum)
-
+    funcTest(10, 20, funcSum)
+    //TODO 匿名函数
+    // 传递匿名函数至简原则：
+    // （1）参数的类型可以省略，会根据形参进行自动的推导
+    // （2）类型省略之后，发现只有一个参数，则圆括号可以省略；其他情况：没有参数和参
+    // 数超过1的永远不能省略圆括号。
+    // （3）匿名函数如果只有一行，则大括号也可以省略
+    // （4）如果参数只出现一次，则参数省略且后面参数可以用_代替
+    funcTest(10, 20,(a: Int, b: Int) => {
+      a + b
+    })
+    funcTest(10, 20, _ + _)
 
 
   }
