@@ -38,12 +38,11 @@ object SparkSparkCode {
     val value1: RDD[Array[String]] = value.map(x => x.split(" "))
     val value2: RDD[(String, Int)] = value1.flatMap(x => x).map(x => (x, 1))
     val value3: RDD[(String, Int)] = value2.reduceByKey(_ + _)
-    value3.foreach(x => println(x._1 + " " + x._2))
+    // value3.foreach(x => println(x._1 + " " + x._2))
     sc.stop()
 
-
     // 触发执行算子 action
-
+    value3.foreach(x => println(x._1 + " " + x._2))
 
   }
 
