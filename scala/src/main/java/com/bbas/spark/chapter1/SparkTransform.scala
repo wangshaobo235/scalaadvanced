@@ -3,6 +3,8 @@ package com.bbas.spark.chapter1
 import org.apache.spark.rdd.RDD
 import org.apache.spark.{SparkConf, SparkContext}
 
+import scala.util.control.Breaks.{break, breakable}
+
 object SparkTransform {
   def main(args: Array[String]): Unit = {
     //TODO
@@ -56,9 +58,73 @@ object SparkTransform {
       x.split(",")(0).toInt % 2 == 0
     })
 
-    value2.foreach(x=>println(x))
+    value2.foreach(x => println(x))
     println("#########")
-    value3.foreach(x=>println(x))
+    value3.foreach(x => println(x))
+
+
+    //加载文件，过滤掉存在空字段的行
+    val value4: RDD[String] = context.textFile("datafiles/datatextfile.txt")
+    val value5: RDD[Array[String]] = value4.map(x => x.split(","))
+    println("#########")
+    val value6: RDD[Array[String]] = value5.filter(x => {
+      var flag = true
+      breakable {
+        for (i <- 0 to x.length - 1) {
+          if (x(i).trim.length == 0) {
+            flag = false
+            break()
+          }
+          else true
+        }
+      }
+      flag
+    })
+
+    value6.foreach(x => {
+      for (i <- 0 to x.length - 1) {
+        print(x(i) + " ")
+      }
+      println()
+    }
+    )
+
+
+    //TODO 加载wordcount 测试文件成为一个rdd
+    /*然后对rdd的字符串进行切割，得到新的rdd
+    对数组rdd进行过滤：
+    1.数组元素小于8的不要
+    2.数组以H开头的不要
+    3.数组中存在某个元素长度>6的不要
+     */
+    println("加载wordcount 测试文件成为一个rdd")
+    val value7: RDD[Array[String]] = context.textFile("datafiles/datatextfile.txt").map(x => x.split(","))
+    val value8: RDD[Array[String]] = value7.filter(x => {
+      /*var flag = true
+      breakable {
+        for (i <- 0 to x.length - 1) {
+          if (x(i).trim.length > 6) {
+            flag = false
+            break()
+          }
+        }
+      }
+
+       */
+      if (x.length < 8 || x(0) == "H" || x.exists(x => x.length > 6))
+        false
+      else
+        true
+    })
+    value8.foreach(x => {
+      for (i <- 0 to x.length - 1) {
+        print(x(i) + " ")
+      }
+      println()
+    }
+    )
+
+
 
 
 
