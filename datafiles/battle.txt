@@ -1,0 +1,6 @@
+1,kill,2
+1,guanya,10
+2,kill,5
+2,gunaya,14
+3,kill,10
+4,guanya,30

@@ -45,49 +45,51 @@ object SparkTransform {
      */
 
     // TODO filter 算子
+    /*
+        val value: RDD[String] = context.textFile("datafiles/datatextfile.txt")
+        val value1: RDD[(Int, String)] = value.map(x => {
+          (x.split(",")(0).toInt, x)
+        })
+        val value2: RDD[(Int, String)] = value1.filter(x => {
+          x._1 % 2 == 0
+        })
 
-    val value: RDD[String] = context.textFile("datafiles/datatextfile.txt")
-    val value1: RDD[(Int, String)] = value.map(x => {
-      (x.split(",")(0).toInt, x)
-    })
-    val value2: RDD[(Int, String)] = value1.filter(x => {
-      x._1 % 2 == 0
-    })
+        val value3: RDD[String] = value.filter(x => {
+          x.split(",")(0).toInt % 2 == 0
+        })
 
-    val value3: RDD[String] = value.filter(x => {
-      x.split(",")(0).toInt % 2 == 0
-    })
-
-    value2.foreach(x => println(x))
-    println("#########")
-    value3.foreach(x => println(x))
+        value2.foreach(x => println(x))
+        println("#########")
+        value3.foreach(x => println(x))
 
 
-    //加载文件，过滤掉存在空字段的行
-    val value4: RDD[String] = context.textFile("datafiles/datatextfile.txt")
-    val value5: RDD[Array[String]] = value4.map(x => x.split(","))
-    println("#########")
-    val value6: RDD[Array[String]] = value5.filter(x => {
-      var flag = true
-      breakable {
-        for (i <- 0 to x.length - 1) {
-          if (x(i).trim.length == 0) {
-            flag = false
-            break()
+        //加载文件，过滤掉存在空字段的行
+        val value4: RDD[String] = context.textFile("datafiles/datatextfile.txt")
+        val value5: RDD[Array[String]] = value4.map(x => x.split(","))
+        println("#########")
+        val value6: RDD[Array[String]] = value5.filter(x => {
+          var flag = true
+          breakable {
+            for (i <- 0 to x.length - 1) {
+              if (x(i).trim.length == 0) {
+                flag = false
+                break()
+              }
+              else true
+            }
           }
-          else true
-        }
-      }
-      flag
-    })
+          flag
+        })
 
-    value6.foreach(x => {
-      for (i <- 0 to x.length - 1) {
-        print(x(i) + " ")
-      }
-      println()
-    }
-    )
+        value6.foreach(x => {
+          for (i <- 0 to x.length - 1) {
+            print(x(i) + " ")
+          }
+          println()
+        }
+        )
+
+     */
 
 
     //TODO 加载wordcount 测试文件成为一个rdd
@@ -97,20 +99,11 @@ object SparkTransform {
     2.数组以H开头的不要
     3.数组中存在某个元素长度>6的不要
      */
+    /*
     println("加载wordcount 测试文件成为一个rdd")
     val value7: RDD[Array[String]] = context.textFile("datafiles/datatextfile.txt").map(x => x.split(","))
     val value8: RDD[Array[String]] = value7.filter(x => {
-      /*var flag = true
-      breakable {
-        for (i <- 0 to x.length - 1) {
-          if (x(i).trim.length > 6) {
-            flag = false
-            break()
-          }
-        }
-      }
 
-       */
       if (x.length < 8 || x(0) == "H" || x.exists(x => x.length > 6))
         false
       else
@@ -124,9 +117,29 @@ object SparkTransform {
     }
     )
 
+     */
 
+    // TODO flatMap
+    /*
+    val value: RDD[String] = context.parallelize(Seq("a b c", "b c d", "c d e"))
+    val value1: RDD[Array[String]] = value.map(x => x.split(" "))
+    val value2: RDD[String] = value.flatMap(x => x.split(" "))
+    val value3: RDD[Array[Int]] = context.parallelize(Seq(Array(1, 2, 3), Array(2, 3, 4), Array(3, 4, 5)))
+    val value4: RDD[List[Array[Int]]] = context.parallelize(Seq(List(Array(1, 2, 3), Array(1, 2, 3)), List(Array(1, 2, 3), Array(1, 2, 3))))
+    value4.flatMap(arr => arr).foreach(x => {
+      for (i <- 0 to x.length - 1) {
+        print(x(i) + " ")
+      }
+      println()
+    }
+    )
 
-
+     */
+    // TODO reduceByKey 传入方式为元组(anyref,int) 直接聚合出来记结果 => (word,count)
+    val value: RDD[String] = context.parallelize(Seq("a c c d", "e f f w", "z x t y"))
+    val value1: RDD[(String, Int)] = value.flatMap(x => x.split(" ")).map(x => (x, 1))
+    val value2: RDD[(String, Int)] = value1.reduceByKey((x, y) => x + y)
+    value2.foreach(x => println(x))
 
     //TODO spark程序入口关闭
     context.stop()

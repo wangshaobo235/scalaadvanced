@@ -1,0 +1,4 @@
+{"id":1,"name":"张飞","age":{"name":"zhanagsan","guanxi":"father","loc":"北京"}}
+{"id":2,"name":"关羽","age":{"name":"lisi","guanxi":"mother","education":"doctor"}}
+{"id":3,"name":"刘备","age":{"name":"wangwu","phone":"iphone"}}
+{"id":4,"name":"赵云","age":{"name":"maliu","guanxi":"uncle"}}
