@@ -22,22 +22,15 @@ object SparkSqlReadOrc {
 
     //TODO 从mysql读取数据
     /*
-    10.131.187.231
-    10002
-    bigdata
-    账号：bigdata
-    mysql5密码：KnVmfYDKneoX7k5QCDd@A3Uv2eEey55a
-    mysql8密码：Z_SrT7v2L7FrgsbWqHb_qakFAcks5QNA
-
     每个城市战斗力最高的两位将军的信息
     总战力最高的前2座城市
+     */
+    /*
+    val properties = new Properties()
 
      */
-    val properties = new Properties()
-    properties.setProperty("user", "bigdata")
-    properties.setProperty("password", "KnVmfYDKneoX7k5QCDd@A3Uv2eEey55a")
 
-    val frame: DataFrame = session.read.jdbc("jdbc:mysql://10.131.187.231:10002/salesdb", "test_table", properties)
+    val frame: DataFrame = session.read.jdbc("jdbc:mysql://:/salesdb", "test_table", properties)
 
     val structType: StructType = StructType(Seq(
       StructField("id", DataTypes.IntegerType),
