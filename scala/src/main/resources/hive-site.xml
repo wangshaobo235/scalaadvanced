@@ -1,0 +1,2 @@
+hive.metastore.uris
+thrift://master:9083
