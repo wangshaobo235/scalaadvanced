@@ -30,7 +30,7 @@ object SparkSqlReadOrc {
 
      */
 
-    val frame: DataFrame = session.read.jdbc("jdbc:mysql://:/salesdb", "test_table", properties)
+    // val frame: DataFrame = session.read.jdbc("jdbc:mysql://:/salesdb", "test_table", properties)
 
     val structType: StructType = StructType(Seq(
       StructField("id", DataTypes.IntegerType),
@@ -40,7 +40,7 @@ object SparkSqlReadOrc {
       StructField("age", DataTypes.IntegerType)))
     val frame1: DataFrame = session.read.option("header", true).schema(structType).csv("datafiles/sanguo.txt")
 
-    frame.createTempView("frame")
+    // frame.createTempView("frame")
     frame1.createTempView("frame1")
 
     session.sql(
