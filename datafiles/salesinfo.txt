@@ -1,0 +1,7 @@
+shop_id,shopname,insure_amount
+A,A店,300
+B,B店,600
+C,C店,200
+E,E店,500
+D,D店,600
+F,F店,800

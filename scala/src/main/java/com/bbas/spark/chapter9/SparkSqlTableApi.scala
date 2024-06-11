@@ -85,6 +85,50 @@ object SparkSqlTableApi {
     frame4.withColumn("leiji_amount", sum("month_total").over(spec))
       .select("shop_id", "month", "month_total", "leiji_amount").show()
 
+
+    /**
+     * join
+     *
+     * jointype
+     * inner, cross, outer, full, fullouter, full_outer, left, leftouter, left_outer, right, rightouter,
+     * right_outer, semi, leftsemi, left_semi, anti, leftanti, left_anti.
+     */
+    println(
+      """
+        |###############
+        |join计算
+        |###############
+        |""".stripMargin)
+
+    val frame5: DataFrame = session.read.option("header", true).csv("datafiles/sales.txt")
+    val frame6: DataFrame = session.read.option("header", true).csv("datafiles/salesinfo.txt")
+    frame5.crossJoin(frame6)
+    frame5.join(frame6)
+    frame5.join(frame6, Seq("shop_id")) // 必须两个dataframe都包含这个shop_id字段
+    frame5.join(frame6, frame5("shop_id") === frame6("shop_id")) //
+    frame5.alias("frame5").
+      join(frame6.alias("frame6"),
+        (frame5("shop_id") === frame6("shop_id")) && (1 == 1), // 定义关联条件
+        "right") // 定义关联方式
+      .select(frame6("shop_id")).distinct().show() //
+
+
+    /**
+     * union
+     * tableapi中的union就是sql中的union all
+     */
+    println(
+      """
+        |###############
+        |union计算
+        |###############
+        |""".stripMargin)
+
+
+    val frame7: DataFrame = session.read.option("header", true).csv("datafiles/salesinfo")
+    val frame8: DataFrame = session.read.option("header", true).csv("datafiles/salesinfo")
+
+    frame7.union(frame8) // 不去重
     session.close()
 
   }
