@@ -10,6 +10,6 @@ object SparkContextUtil {
 
   def getSparkSession(): SparkSession = {
     val sparkcontext: SparkConf = new SparkConf().setMaster("local").setAppName("sparkcontext")
-    SparkSession.builder().config(sparkcontext).getOrCreate()
+    SparkSession.builder().config(sparkcontext).enableHiveSupport().getOrCreate()
   }
 }
