@@ -49,6 +49,10 @@ object ScalaCollectionFunction {
     intToInts.foreach(x=>{
       println(x._1 +" "+ x._2)
     })
+
+
+
+
   }
 
 }

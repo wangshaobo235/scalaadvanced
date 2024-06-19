@@ -34,7 +34,6 @@ object ScalaCollectionSeq {
     ints1.toList
     ints11.toBuffer
 
-
   }
 
 }
