@@ -61,9 +61,12 @@ object SparkTransform {
     /*
     def repartition(numPartitions: Int)(implicit ord: Ordering[T] = null): RDD[T] = withScope {
     coalesce(numPartitions, shuffle = true)
-  }
      */
-    // value.repartition(2) // 调用repartition，底层调用的coalesce(numPartitions, shuffle = true)
+     // value1.repartition(2) // 调用repartition，底层调用的coalesce(numPartitions, shuffle = true)
+
+
+    //todo partitionby
+
 
     //TODO join
     // Option 有两个子类 Some(),None

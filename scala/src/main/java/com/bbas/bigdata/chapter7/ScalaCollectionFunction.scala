@@ -70,7 +70,7 @@ object ScalaCollectionFunction {
     val ints4: List[Int] = ints3.sortBy(x => x)
     println(ints4)
     //TODO 默认情况下 sortby是升序排序。如果想要降序。需要传递第二个参数列表
-    // sortBY方法存在函数科利华。可以传递多个列表
+    // sortBY方法存在函数柯里化。可以传递多个列表
     ints3.sortBy(x => x.toString)(Ordering.String.reverse)
     val user = new user()
     val user1 = new user()
@@ -95,7 +95,7 @@ object ScalaCollectionFunction {
 
     //sortWith
     // sortWith 方法需要传递一个参数，参数的类型为函数类型 (user,user)=>boolean
-    // 这里的user就是叽盒子用于比较的两个user对象
+    // 这里的user就是用于比较的两个user对象
     // 这里的boolean表示预计的排序结果判断值 true 预想的结果 false 不是预想的结果
     // users.sortBy(x => x.age).sortBy(x=>x.money)
     println(users.sortWith((x, y) => {
@@ -113,13 +113,6 @@ object ScalaCollectionFunction {
     users.sortBy(x=>{
       (x.age,x.money)
     })(Ordering.Tuple2(Ordering.Int,Ordering.Int.reverse))
-
-
-
-
-
-
-
 
 
 
