@@ -52,6 +52,48 @@ object SparkRddDependency {
      *
      *
      *
+     *rdd的血缘与依赖关系
+     * dependency概念
+     * dependency不仅描述父子血缘，更关键描述了父子RDD的partitions之间的依赖关系
+     * dependency是判断是否需要划分stage(即是否需要shuffle)的依据。
+     *依赖的实现类
+     * shuffledependency 宽依赖
+     * narrowdependency 窄依赖
+     *
+     * 窄依赖的核心特点
+     *父rdd的一个分区，一定只会被子rdd的一个分区所依赖。
+     * 子rdd的一个分区，可以依赖父RDD的多个分区。
+     *
+     * 宽依赖
+     * 指的是父RDD的一个分区可能会被子rdd的所有分区依赖。
+     * 因而父RDD一个分区的数据需要被分割成多份，来形成子RDD的各个分区:
+     * 因此宽依赖也意味着从父RDD计算出子RDD的过程中，需要一个洗牌(Shuffle)过程。
+     *
+     *
+     *job调度中的核心概念
+     * spark中的job调度：是指spark框架底层根据rdd逻辑链条，划分stage,生成task并提交执行的过程
+     *
+     * application:创建一个sparkcontext,就生成了一个application
+     * job 触发一次行动算子，就产生了一个job
+     * 而每一个job中，都包含如下概念:
+     * dag : 叫做有向无环图，是一系列rdd转换关系的描述
+     * stage：以shuffle为分界线，将DAG转换逻辑 从整体划分成段，每一段就称之为一个stage
+     *        本质就是：一个stage中的rdd计算逻辑可以放在一个task执行
+     * taskset / task
+     * 同一个stage计算的时候会有多个task进行运算，逻辑相同，处理的分区和数据不同。多个task就叫做taskset ,一个taskset包含多个task。
+     * 一个stage的并行度由这个stage最后一个rdd的分区数决定。
+     *
+     *Task/Task Set
+     *每一个 stage 中包含的逻辑链条段，需要提交集群去并行执行，每个执行实例就称之为一个task;而这个 stage 所转化出来的这一批task，
+     * 称之为task set(一个taskset中所有 task 执行的计算逻辑都相同，不同的只是负责的数据分区不同):
+      (task，本质上是一个类，它封装了调用rdd 选代器的代码以及将计算结果输出的代码)
+     *Task在spark内部共有2种:shuffleMapTask和resultTask最后一个stage 所产生的task，是resultTask
+      其他 stage 所产生的task，都属于 shuffleMapTask
+     *task是线程，在executor进程中执行。
+     *
+     *
+     *
+     *
      *
      */
   }
