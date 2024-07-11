@@ -1,13 +1,12 @@
 package com.bbas.spark.chapter6
 
-import com.bbas.spark.util.SparkContextUtil
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD
 
 object SparkRddCheckpoint {
   def main(args: Array[String]): Unit = {
     // 这个application job数为3个
-    val sc: SparkContext = SparkContextUtil.getSparkContext()
+    /*val sc: SparkContext =SparkContextUtil.getSparkContext()
     sc.setCheckpointDir("data/checkpoint/")
     val rdd: RDD[Int] = sc.parallelize(seq = 1 to 10000)
     val rdd2: RDD[(String, Int)] = rdd.map(i => (i + "", i))
@@ -21,10 +20,8 @@ object SparkRddCheckpoint {
     rdd3.reduceByKey(_ + _).count()
     rdd3.map(tp => (tp._1 + "_a", Math.max(tp._2, 100))).groupByKey().mapValues(iter => iter.max).count()
     Thread.sleep(Long.MaxValue)
-
-    
-
-
     sc.stop()
+
+     */
   }
 }

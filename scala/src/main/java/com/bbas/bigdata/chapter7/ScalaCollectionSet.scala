@@ -1,4 +1,4 @@
-package main.java.com.bbas.bigdata.chapter7
+package com.bbas.bigdata.chapter7
 
 import scala.collection.mutable
 

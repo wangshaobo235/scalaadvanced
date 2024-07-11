@@ -61,7 +61,6 @@ object ScalaFunctionCharacte {
     }
 
     val testCopy4: () => Unit = test4 _
-    testCopy4
     testCopy4()
 
     //TODO 将函数对象作为参数使用

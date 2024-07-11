@@ -45,11 +45,6 @@ object ScalaFunctionNightMare {
       return "test"
     }
 
-    // 肯定不返回值，等号可以省略，一般是和Unit同时省略
-    def test6() {
-      return "test"
-    }
-
       //TODO Scala语言是完全面向对象的语言，所以万物皆对象
       // Scala语言是完全面向函数式编程语言，所以万物皆函数
       // 如果不想让函数执行，只是想访问这个函数本身，可以采取特殊符号（下划线 ）进行转换 函数名 _
