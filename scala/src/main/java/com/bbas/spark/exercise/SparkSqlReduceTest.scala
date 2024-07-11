@@ -11,6 +11,7 @@ object SparkSqlReduceTest {
       .enableHiveSupport()
       .getOrCreate()
     println("master分支添加一行代码")
+    println("dev分支添加一行代码")
     println("######删除7月分区数据######")
     session.sql("alter table ads.t_ads_d_bi_allprovince_suppchaindata drop if exists partition(year_month='2024-07')")
     println("######7月分区数据删除完成，开始计算######")
